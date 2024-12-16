@@ -37,7 +37,7 @@ class SingUpController extends Controller
                 'success' => true,
                 'token' => $token,
                 'message' => 'User registered successfully',
-            ], 201); // 201: Resource created
+            ], 200); // 201: Resource created
         } catch (\Exception $e) {
             // Return failure response if something goes wrong
             return response()->json([
