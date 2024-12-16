@@ -128,7 +128,7 @@ class OTPGenerateController extends Controller
                 'Data' => [
                     'mobile' => $mobileNumber,
                     'otp_verified' => true,
-                    'expires_at' => null
+                    'expires_at' => now()->addMinutes(5)->toDateTimeString(),
                 ]
             ]);
         }
