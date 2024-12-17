@@ -34,10 +34,4 @@ Route::post('/reset-password/{token}', [ForgotPasswordController::class, 'resetP
 Route::post('/otp-generate', [OTPGenerateController::class, 'otpgenerate']);
 Route::post('/otp-verify', [OTPGenerateController::class, 'otpverify']);
 
-//Route::get('/otp-generate', [OTPGenerateController::class, 'otpgenerate']);
-
-// Route::get('/otp/login', 'login')->name('otp.login');
-// Route::post('/otp/generate', 'generate')->name('otp.generate');
-// Route::get('/otp/verification/{user_id}', 'verification')->name('otp.verification');
-// Route::post('/otp/login', 'loginWithOtp')->name('otp.getlogin'); 
 

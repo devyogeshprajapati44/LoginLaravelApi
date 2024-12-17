@@ -8,8 +8,8 @@
 </head>
 <body>
     <div class="container">
-        <h2>Register</h2>
-        <form action="{{ route('register') }}" method="POST">
+        <h2>ZENDO</h2>
+        <form action="{{ route('api/register') }}" method="POST">
             @csrf
 
             <div class="form-group">
