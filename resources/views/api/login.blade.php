@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" />
+  <style>
         .error { color: red; }
         .success { color: green; }
     </style>
@@ -12,10 +15,10 @@
 <body>
     <h1>Login</h1>
 
-    <form id="loginForm">
+    <form action="{{ route('login') }}" id="loginForm">
         <div>
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
+            <label for="login">Mobile/Email:</label>
+            <input type="text" id="login" name="login" required>
         </div>
         <div>
             <label for="password">Password:</label>
@@ -25,12 +28,15 @@
     </form>
 
     <div id="responseMessage"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 
     <script>
         document.getElementById('loginForm').addEventListener('submit', async (event) => {
             event.preventDefault();
 
-            const email = document.getElementById('email').value;
+            const login = document.getElementById('login').value;
             const password = document.getElementById('password').value;
 
             try {

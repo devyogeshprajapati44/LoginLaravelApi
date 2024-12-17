@@ -1,46 +1,42 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\SingUpController;
+use App\Http\Controllers\Api\SignUpController;
 use App\Http\Controllers\Api\SignInController;
 use App\Http\Controllers\Api\ForgotPasswordController;
 use App\Http\Controllers\Api\PasswordResetController;
 use App\Http\Controllers\Api\GetDataController;
 use App\Http\Controllers\Api\OTPGenerateController;
 use Illuminate\Http\Request;
+use App\Models\User;
 
 
-// Route::get('/', function () {
-//     return view('.register');
-// });
-
-
-
-// User route
-Route::get('/user', function (Request $request) {
+// General Login View
+Route::get('api/login', function (Request $request) {
     return view('user', ['user' => $request->user()]);
+  
 });
 
+Route::get('api/register', function (Request $request) {
+    return view('api.register', ['user' => $request->user()]);
+});
 
+// Register Route
 
+//Route::match(['get', 'post'], 'api/register', [SignUpController::class, 'register']);
+//Route::post('api/register', [SignUpController::class, 'register'])->name('api.register');
 
-// Register route
-Route::post('register', [SignUpController::class, 'register'])->name('api.register');
+// // Login Route
+// Route::post('/login', [SignInController::class, 'login'])->name('login');
 
-// Register route
-// Route::post('api/register', [SingUpController::class, 'register'])->name('api.register');
+// // Forgot Password Route
+// Route::post('forgot-password', [ForgotPasswordController::class, 'sendResetLink'])->name('password.forgot');
 
-// Get data route
-Route::get('/getdata', [GetDataController::class, 'getdata'])->name('getdata');
+// // Password Reset Route
+// Route::post('reset-password', [PasswordResetController::class, 'reset'])->name('password.reset');
 
-// Login route
-Route::post('/login', [SignInController::class, 'login'])->name('login');
+// // OTP Generation Route
+// Route::post('generate-otp', [OTPGenerateController::class, 'generate'])->name('otp.generate');
 
-// Change password routes
-Route::match(['get', 'post'], '/forgot-password', [ForgotPasswordController::class, 'forgetpassword'])->name('forgot-password');
-Route::post('/reset-password/{token}', [ForgotPasswordController::class, 'resetPassword'])->name('reset-password');
-
-// OTP routes
-Route::post('/otp-generate', [OTPGenerateController::class, 'otpgenerate'])->name('otp-generate');
-Route::post('/otp-verify', [OTPGenerateController::class, 'otpverify'])->name('otp-verify');
-
+// // Get Data Route
+// Route::get('get-data', [GetDataController::class, 'getData'])->name('api.getData');

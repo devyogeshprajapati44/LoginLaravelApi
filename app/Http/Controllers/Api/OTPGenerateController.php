@@ -21,8 +21,8 @@ class OTPGenerateController extends Controller
 
         if ($validator->fails()) {
             return response()->json([
-                'Status Code' => false,
-                'Message' => $validator->errors(), // Validation errors
+                'status_code' => false,
+                'message' => $validator->errors(), // Validation errors
                 'Data' => null
             ], 400);
         }
@@ -33,8 +33,8 @@ class OTPGenerateController extends Controller
         // Check if the email exists
         if (!$user) {
             return response()->json([
-                'Status Code' => false,
-                'Message' => 'Email not found.',
+                'status_code' => false,
+                'message' => 'Email not found.',
                 'Data' => null
             ], 404);
         }
@@ -64,9 +64,9 @@ class OTPGenerateController extends Controller
         Cache::put('otp_' . $mobileNumber, $otp, now()->addMinutes(5));
 
         $response = [
-            'Status Code' => true,
-            'Message' => 'OTP generated successfully.',
-            'Data' => [
+            'status_code' => true,
+            'message' => 'OTP generated successfully.',
+            'data' => [
                 'mobile' => $mobileNumber,
                 'otp' => (app()->environment('local', 'staging')) ? $otp : null, // Only show OTP in local/staging environments
                 'expires_at' => now()->addMinutes(5)->toDateTimeString(),
@@ -87,9 +87,9 @@ class OTPGenerateController extends Controller
         // Validation failed
         if ($validator->fails()) {
             return response()->json([
-                'Status Code' => false,
-                'Message' => $validator->errors(), // Validation errors
-                'Data' => null
+                'status_code' => false,
+                'message' => $validator->errors(), // Validation errors
+                'data' => null
             ], 400);
         }
 
@@ -106,9 +106,9 @@ class OTPGenerateController extends Controller
 
             if (!$otpRecord) {
                 return response()->json([
-                    'Status Code' => false,
-                    'Message' => 'The OTP is either invalid or has expired. Please request a new OTP.',
-                    'Data' => null
+                    'status_code' => false,
+                    'message' => 'The OTP is either invalid or has expired. Please request a new OTP.',
+                    'data' => null
                 ], 400);
             }
 
@@ -123,9 +123,9 @@ class OTPGenerateController extends Controller
             Cache::forget('otp_' . $mobileNumber);
 
             return response()->json([
-                'Status Code' => true,
-                'Message' => 'OTP verified successfully.',
-                'Data' => [
+                'status_code' => true,
+                'message' => 'OTP verified successfully.',
+                'data' => [
                     'mobile' => $mobileNumber,
                     'otp_verified' => true,
                     'expires_at' => now()->addMinutes(5)->toDateTimeString(),
@@ -135,9 +135,9 @@ class OTPGenerateController extends Controller
 
         // OTP mismatch
         return response()->json([
-            'Status Code' => false,
-            'Message' => 'Invalid OTP.',
-            'Data' => null
+            'status_code' => false,
+            'message' => 'Invalid OTP.',
+            'data' => null
         ], 400);
     }}
 

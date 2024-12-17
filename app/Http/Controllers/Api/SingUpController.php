@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Validator;
 
 class SingUpController extends Controller
 {
+    
     public function register(Request $request)
     {
         // Define validation rules
@@ -35,7 +36,7 @@ class SingUpController extends Controller
         // If validation fails, return errors in JSON format
         if ($validator->fails()) {
             return response()->json([
-                'success' => false,
+                'status_code' => 422,
                 'message' => 'Validation errors occurred.',
                 'errors' => $validator->errors(), // Return all validation errors
             ], 422); // 422: Unprocessable Entity
@@ -55,7 +56,7 @@ class SingUpController extends Controller
     
             // Return success response
             return response()->json([
-                'success' => true,
+                'status_code' => 200,
                 'message' => 'User registered successfully.',
                 'data' => [
                     'token' => $token,
@@ -67,7 +68,7 @@ class SingUpController extends Controller
         } catch (\Exception $e) {
             // Return failure response if something goes wrong
             return response()->json([
-                'success' => false,
+                'success' => 500,
                 'message' => 'Registration failed due to a server error.',
                 'error' => $e->getMessage(),
             ], 500); // 500: Internal server error
