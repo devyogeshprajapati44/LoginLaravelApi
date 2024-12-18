@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\GetDataController;
 use App\Http\Controllers\Api\OTPGenerateController;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Http\Controllers\Api\ImageController;
 
 
 // General Login View
@@ -17,13 +18,22 @@ Route::get('api/login', function (Request $request) {
   
 });
 
+// Route::get('api/register', function (Request $request) {
+//     return view('register', ['user' => $request->user()]);
+// });
+
+//Route::post('/upload-image', [ImageController::class, 'imgaeupload']);
+Route::get('api/upload-image', function (Request $request) {
+    return view('api.imgaeupload', ['user' => $request->user()]);
+});
+
 Route::get('api/register', function (Request $request) {
     return view('api.register', ['user' => $request->user()]);
 });
 
 // Register Route
 
-//Route::match(['get', 'post'], 'api/register', [SignUpController::class, 'register']);
+//Route::match(['get', 'post'], 'api/register', [SignUpController::class, 'api.register']);
 //Route::post('api/register', [SignUpController::class, 'register'])->name('api.register');
 
 // // Login Route

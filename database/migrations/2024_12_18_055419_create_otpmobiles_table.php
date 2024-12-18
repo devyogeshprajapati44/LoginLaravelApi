@@ -13,7 +13,14 @@ return new class extends Migration
     {
         Schema::create('otpmobiles', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->string('mobile')->index(); // Ensure the `mobile` column exists
+            $table->string('otp');
+            $table->timestamp('expires_at');
             $table->timestamps();
+        
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+        
         });
     }
 

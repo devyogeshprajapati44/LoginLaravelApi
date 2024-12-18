@@ -8,9 +8,7 @@ use App\Http\Controllers\Api\ForgotPasswordController;
 use App\Http\Controllers\Api\PasswordResetController;
 use App\Http\Controllers\Api\GetDataController;
 use App\Http\Controllers\Api\OTPGenerateController;
-
-
-
+use App\Http\Controllers\Api\ImageController;
 
 
 Route::get('/user', function (Request $request) {
@@ -33,5 +31,9 @@ Route::post('/reset-password/{token}', [ForgotPasswordController::class, 'resetP
 
 Route::post('/otp-generate', [OTPGenerateController::class, 'otpgenerate']);
 Route::post('/otp-verify', [OTPGenerateController::class, 'otpverify']);
+
+//Image upload file route
+
+Route::post('/upload-image', [ImageController::class, 'imgaeupload']);
 
 
