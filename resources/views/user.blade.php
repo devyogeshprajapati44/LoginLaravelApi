@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zendo</title>
+    <title>Zendo Login</title>
     <!-- Bootstrap CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
@@ -37,10 +37,10 @@
 
 <body>
     <div class="container">
-        <h1 class="text-center">Login</h1>
+        <h1 class="text-center">Zendo Login</h1>
         <form id="loginForm">
             <div class="form-group">
-                <label for="login">Email:</label>
+                <label for="login">Mobile/Email:</label>
                 <input type="text" id="login" name="login" class="form-control" required>
             </div>
             <div class="form-group">

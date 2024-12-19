@@ -3,8 +3,8 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zendo - Register</title>
+    <title>Zendo-Register</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Bootstrap CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
@@ -37,7 +37,7 @@
 
 <body>
     <div class="container">
-        <h1 class="text-center">Register</h1>
+        <h1 class="text-center">Zendo-Register</h1>
         <form  action="{{ route('api.register') }}"  method="POST" id="registerForm">
             <div class="form-group">
                 <label for="username">Username:</label>
@@ -70,41 +70,52 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
-        document.getElementById('registerForm').addEventListener('submit', async (event) => {
-            event.preventDefault();
+    document.getElementById('registerForm').addEventListener('submit', async (event) => {
+        event.preventDefault();
 
-            const username = document.getElementById('username').value;
-            const email = document.getElementById('email').value;
-            const mobile = document.getElementById('mobile').value;
-            const password = document.getElementById('password').value;
-            const password_confirmation = document.getElementById('password_confirmation').value;
+        const username = document.getElementById('username').value;
+        const email = document.getElementById('email').value;
+        const mobile = document.getElementById('mobile').value;
+        const password = document.getElementById('password').value;
+        const password_confirmation = document.getElementById('password_confirmation').value;
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-            try {
-                const response = await fetch('/api/register', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json',
-                    },
-                    body: JSON.stringify({ username, email, mobile, password, password_confirmation }),
-                });
+        try {
+            const response = await fetch('/api/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': csrfToken,  // Include the CSRF token here
+                },
+                body: JSON.stringify({ username, email, mobile, password, password_confirmation }),
+            });
 
-                const data = await response.json();
-                const responseMessage = document.getElementById('responseMessage');
+            const data = await response.json();
+            const responseMessage = document.getElementById('responseMessage');
 
-                if (response.ok) {
-                    responseMessage.innerHTML = `<p class="success">${data.Message}</p>`;
-                    console.log('Registration Successful:', data);
-                } else {
-                    responseMessage.innerHTML = `<p class="error">${data.Message}</p>`;
+            if (response.ok) {
+                const message = data.Message || data.message || "User registered successfully!";
+                responseMessage.innerHTML = `<p class="success">${message}</p>`;
+                console.log('Registration Successful:', data);
+            } else {
+                const errorMessages = data.errors || {};
+                let errorMessageHTML = "<ul>";
+                for (const [field, messages] of Object.entries(errorMessages)) {
+                    messages.forEach(message => {
+                        errorMessageHTML += `<li>${message}</li>`;
+                    });
                 }
-            } catch (error) {
-                console.error('Error:', error);
-                document.getElementById('responseMessage').innerHTML =
-                    `<p class="error">An unexpected error occurred. Please try again later.</p>`;
+                errorMessageHTML += "</ul>";
+                responseMessage.innerHTML = `<p class="error">${errorMessageHTML}</p>`;
             }
-        });
-    </script>
+        } catch (error) {
+            console.error('Error:', error);
+            document.getElementById('responseMessage').innerHTML =
+                `<p class="error">An unexpected error occurred. Please try again later.</p>`;
+        }
+    });
+</script>
 </body>
 
 </html>

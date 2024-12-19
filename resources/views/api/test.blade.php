@@ -1,26 +1,47 @@
 <?php
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\SingUpController;
+use App\Http\Controllers\Api\SignInController;
+use App\Http\Controllers\Api\ForgotPasswordController;
+use App\Http\Controllers\Api\PasswordResetController;
+use App\Http\Controllers\Api\GetDataController;
+use App\Http\Controllers\Api\OTPGenerateController;
+use App\Http\Controllers\Api\ImageController;
+use App\Http\Controllers\Api\OTPGenerate_Mobile_PasswordController;
 
-// Validate the request
-$request->validate([
-    'image' => 'required|image|mimes:jpg,jpeg,png|max:2048', // 2MB max
-]);
 
-// Store the image in the 'public/images' directory
-$filePath = $request->file('image')->store('images', 'public');
+Route::get('/user', function (Request $request) {
+    return $request->user();
+    
+})->middleware('auth:sanctum');
+// Route::post('/register', function () {
+//     return response()->json(['message' => 'Route works!']);
+// });
 
-// Save image details in the database
-$image = Image::create([
-    'file_name' => $request->file('image')->getClientOriginalName(),
-    'file_path' => $filePath,
-]);
+Route::post('register', [SingUpController::class, 'register']);
+Route::get('getdata', [GetDataController::class, 'getdata']);
+// Route::post('/register', [SingUpController::class, 'register']);
+Route::post('/login', [SignInController::class, 'login']);
 
-// Return JSON response
-return response()->json([
-    'success' => true,
-    'message' => 'Image uploaded successfully!',
-    'data' => [
-        'id' => $image->id,
-        'file_name' => $image->file_name,
-        'file_path' => asset('storage/' . $image->file_path),
-    ],
-]);
+// Change password api
+Route::match(['get', 'post'], '/forgot-password', [ForgotPasswordController::class, 'forgetpassword']);
+Route::post('/reset-password/{token}', [ForgotPasswordController::class, 'resetPassword']);
+// OTP code Generate
+
+Route::post('/otp-generate', [OTPGenerateController::class, 'otpgenerate']);
+Route::post('/otp-verify', [OTPGenerateController::class, 'otpverify']);
+
+//Mobile OTP password 
+
+Route::post('/otp-mobile-password', [OTPGenerate_Mobile_PasswordController::class, 'otpmobile_password']);
+Route::post('/otp-mobile-verify-password', [OTPGenerate_Mobile_PasswordController::class, 'otpmobile_password_verify']);
+
+//Image upload file route
+
+Route::post('/upload-image', [ImageController::class, 'imgaeupload']);
+
+
+
+
+ 
