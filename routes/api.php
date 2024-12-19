@@ -9,7 +9,8 @@ use App\Http\Controllers\Api\{
     ImageController,
     OTPGenerate_Mobile_PasswordController,
     GetDataController,
-    SwipImageController
+    SwipImageController,
+    EmailOtpController
 };
 
 // Authentication Routes
@@ -27,6 +28,11 @@ Route::middleware('throttle:5,1')->group(function () {
     Route::post('/mobile-password', [OTPGenerate_Mobile_PasswordController::class, 'otpmobile_password'])->name('api.mobile_password');
     Route::post('/mobile-verify-password', [OTPGenerate_Mobile_PasswordController::class, 'otpmobile_password_verify'])->name('api.mobile_verify_password');
 });
+
+// Email OTP Code
+
+Route::post('email_forgot-password', [EmailOtpController::class, 'sendResetOTP'])->name('api.sendResetOTP');
+Route::post('email_reset-password', [EmailOtpController::class, 'resetPassword'])->name('api.resetPassword');
 
 
 // Image Upload
