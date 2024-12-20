@@ -10,7 +10,8 @@ use App\Http\Controllers\Api\{
     OTPGenerate_Mobile_PasswordController,
     GetDataController,
     SwipImageController,
-    EmailOtpController
+    EmailOtpController,
+    DeviceController
 };
 
 // Authentication Routes
@@ -40,6 +41,10 @@ Route::post('upload-image', [ImageController::class, 'imgaeupload'])->name('api.
 Route::post('insert_image', [SwipImageController::class, 'insertImage'])->name('api.insert_image');
 Route::get('get_swipe_image', [SwipImageController::class, 'multiple_image'])->name('api.get_swipe_image');
 
+
+// Devise name
+Route::post('devices_name', [DeviceController::class, 'deviseName'])->name('api.devises_name');// Insert data
+Route::get('devices_count_name', [DeviceController::class, 'countDevicesByName'])->name('api.get_count_devise_name)');
 
 // Protected Route
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

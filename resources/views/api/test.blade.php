@@ -45,3 +45,12 @@ Route::post('/upload-image', [ImageController::class, 'imgaeupload']);
 
 
  
+return response()->json([
+    'success' => true,
+    'message' => 'Device count retrieved successfully',
+    'data' => [
+        'id' => $image->id,
+        'count' => $count->count,
+        'devise_name' => $devise_name->devise_name,
+    ],
+]);

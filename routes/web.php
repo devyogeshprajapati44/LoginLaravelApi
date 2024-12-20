@@ -27,6 +27,14 @@ Route::get('api/upload-image', function (Request $request) {
     return view('api.imgaeupload', ['user' => $request->user()]);
 });
 
+Route::get('api/get_count_devise_name', function (Request $request) {
+    return view('api.get_count_devise_name', ['user' => $request->user()]);
+});
+
+Route::get('api/devices_name', function (Request $request) {
+    return view('api.devices_name', ['user' => $request->user()]);
+});
+
 Route::get('api/register', function (Request $request) {
     return view('api.register', ['user' => $request->user()]);
 });
